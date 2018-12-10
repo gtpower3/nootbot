@@ -16,7 +16,7 @@ const search = require('youtube-search');
 var opts = {
   maxResults: 5,
   type: 'video',
-  key: 'AIzaSyDf3H33bvxVFn-vBID-JdvuWxbhG1mciaE'
+  key: process.env.APIKey
 };
 
 
