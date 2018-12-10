@@ -25,10 +25,10 @@ const fs = require('fs');
 //ytdl-core
 const yt = require('ytdl-core');
 
-//cleverbot-node CCCkew0mBtnvMedOg3B_KHRNUCA
+//cleverbot-node
 const Cleverbot = require('cleverbot-node');
 const cleverbot = new Cleverbot;
-cleverbot.configure({botapi: "CCCkew0mBtnvMedOg3B_KHRNUCA"});
+cleverbot.configure({botapi: process.env.CLEVERBOT_KEY});
 
 //giphy-api
 const giphy = require('giphy-api')();
@@ -1598,14 +1598,14 @@ bot.on("message", msg => {
     {
       var num;
 
-      fs.readFile(".//cleverbot.txt", 'utf8', function(err, data) {
+     /* fs.readFile(".//cleverbot.txt", 'utf8', function(err, data) {
         if (err) return msg.channel.send(`error while reading cleverbot.txt: ${err}`);
 
         console.log(`read: ${data}`);
         num = data;
 
         if(num >= 5000) return msg.reply(":zipper_mouth:");
-      });
+      });*/
 
       var cleverMessage = "";
       var split = msg.content.split(" ");
@@ -1616,7 +1616,7 @@ bot.on("message", msg => {
       }
       //console.log(cleverMessage);
 
-      console.log(`num: ${num}`);
+      //console.log(`num: ${num}`);
 
       /*fs.writeFile(".//cleverbot.txt", num++, function(err) {
         if (err) return msg.channel.send(`error while writing to cleverbot.txt: ${err}`);
