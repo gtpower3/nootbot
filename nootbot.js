@@ -2,8 +2,6 @@
 //require stuff
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-require('http').createServer().listen(3000);
-
 //discord.js
 const Discord = require('discord.js');
 const bot = new Discord.Client();
@@ -16,7 +14,7 @@ const search = require('youtube-search');
 var opts = {
   maxResults: 5,
   type: 'video',
-  key: process.env.APIKey
+  key: process.env.API_KEY
 };
 
 
