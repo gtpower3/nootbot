@@ -25,11 +25,6 @@ const fs = require('fs');
 //ytdl-core
 const yt = require('ytdl-core');
 
-//cleverbot-node
-const Cleverbot = require('cleverbot-node');
-const cleverbot = new Cleverbot;
-cleverbot.configure({botapi: process.env.CLEVERBOT_KEY});
-
 //giphy-api
 const giphy = require('giphy-api')();
 
@@ -1590,45 +1585,6 @@ bot.on("message", msg => {
   //log(msg);
 
   let input = msg.content.toUpperCase();
-
-  if(msg.mentions.users.has(nootbotid))
-  {
-    if(!msg.content.split(" ")[1]) return msg.reply("what");
-    else
-    {
-      var num;
-
-     /* fs.readFile(".//cleverbot.txt", 'utf8', function(err, data) {
-        if (err) return msg.channel.send(`error while reading cleverbot.txt: ${err}`);
-
-        console.log(`read: ${data}`);
-        num = data;
-
-        if(num >= 5000) return msg.reply(":zipper_mouth:");
-      });*/
-
-      var cleverMessage = "";
-      var split = msg.content.split(" ");
-
-      for(var i = 1; i < split.length; i++)
-      {
-        cleverMessage = cleverMessage + " " + split[i];
-      }
-      //console.log(cleverMessage);
-
-      //console.log(`num: ${num}`);
-
-      /*fs.writeFile(".//cleverbot.txt", num++, function(err) {
-        if (err) return msg.channel.send(`error while writing to cleverbot.txt: ${err}`);
-      });*/
-
-      cleverbot.write(cleverMessage, function (response) {
-        msg.reply(response.output);
-        //console.log(response);
-      });
-
-    }
-  } else //chat
 
   if(msg.content === "@anyone")
   {
