@@ -17,8 +17,6 @@ var opts = {
   key: process.env.API_KEY
 };
 
-
-
 //fs
 const fs = require('fs');
 
@@ -34,7 +32,6 @@ const gifsearch = require('gif-search');
 const dictionary = require("dictionary-en-us");
 const Nspell  = require("nspell");
 var grtarget;
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //declarations
@@ -1630,6 +1627,10 @@ bot.on("message", msg => {
   {
     msg.channel.send("no u");
   } else //no u
+
+  if(input.toUpperCase() === "K"){
+    msg.channel.send("oof");
+  }
 
   if(input.startsWith(prefix + "AAAA "))
   {
