@@ -81,6 +81,9 @@ var events = [
   ["shakes hands", "shares a high five", "meets with", "goes hunting with"], //doubleEvents:
   ["is killed by", "is punched to death by", "is choked to death by", "is shot to death by"] //doubleDeaths:
 ];
+var stop = false;
+var joinTimer = 10; //seconds
+var eventInterval = 5; //seconds
 /*
 var individualEvents = [];
 var doubleEvents = [];
@@ -1364,6 +1367,53 @@ function handleCMD(msg)
     msg.channel.send(res);
   }
 
+  if(input === prefix + "STOPGAME")
+  {
+    if(stop == false) stop = true;
+    else stop = false;
+    msg.channel.send(`stop set to ${stop}`);
+  } else
+
+  if(input.startsWith(prefix + "GAME "))
+  {
+    let cmd = msg.content.slice(6);
+
+    if(cmd.toUpperCase().startsWith("START "))
+    {
+      if(!games.hasOwnProperty(msg.guild.id))
+      {
+        let round = 0;
+        let type = cmd.split(" ")[1]; //modes: "rr" = russian roulette | "hg" = hunger games | "got" = game of thrones
+        if((!type == "rr")) return msg.channel.send("invalid game type"); //|| (!type == "hg") || (!type == "tt")) return msg.channel.send("invalid game type");
+        let players = [];
+        players.push(msg.member);
+        players.push(msg.guild.members.get(nootbotid));
+        msg.channel.send("A new round of russian roulette is about to start! Type `" + prefix + "game join` within `" + joinTimer + "` seconds to join in!");
+        // Create a message collector
+        const collector = msg.channel.createCollector(
+         m => m.content.toUpperCase() == prefix + "GAME JOIN",
+         { time: joinTimer*1000 });
+        collector.on('collect', m => {
+          let player = m.member;
+          if(!players.includes(player))
+          {
+            players.push(player);
+            m.channel.send("`" + player.displayName + "`" +  " has joined the game!");
+          }
+          else m.reply("You're already in the game!");
+        });
+        collector.on('end', collected => {
+          if(collected.size < 1) return msg.channel.send("not enough players!");
+          msg.channel.send("Timer over, starting game!");
+          games[msg.guild.id] = {channel: msg.channel, round, type, players};
+          //if(type == "rr")
+          playRR(msg.guild.id);
+          //else if(type == "hg") playHG(msg.guild.id);
+        });
+      }
+    }
+  } else //game
+
 /*
   if (input.startsWith(prefix + "GAME "))
   {
@@ -1571,6 +1621,70 @@ function playyt(vc, mc, link)
   });
 }
 
+function playRR(id)
+{
+  let game = games[id];
+  if (!game.type == "rr") return msg.channel.send("invalid game type");
+
+  let selector = 0;
+  let playerNum = game.players.length;
+  let target;
+
+  game.channel.send(">game starts").then(m => {
+    m.channel.send("playing rr internally.....");
+    var gameInterval = bot.setInterval(() => {
+      if(stop) bot.clearInterval(gameInterval);
+
+      let rng = (Math.floor(Math.random() * 6) + 1);
+      target = game.players[selector];
+      console.log(`selector: [${selector}] - ${target.displayName}`);
+      //m.edit(`${m.content}\n>${target.displayName} :gun: pulling the trigger in 5 seconds! (for dramatic purposes)`);
+
+      if(rng === 1)
+       {
+         //m.edit(`${m.content}\n>${target.displayName} :fire: it's a shot! you're out!`);
+         m.channel.send(`${target.displayName}: :fire: it's a shot! you're out!`);
+         game.players[selector] = null;
+         playerNum--;
+         console.log(`${target.displayName}[${selector}] is spliced`);
+       }
+       else {
+         //m.edit(`${m.content}\n>${target.displayName} :heavy_check_mark: it's not a shot! you live to roulette another round!`);
+         selector++;
+       }
+
+       if(selector === game.players.length) selector = 0;
+
+       while(game.players[selector] === null){
+         if(selector === game.players.length) selector = 0;
+         else selector++;
+       }
+
+       /*if(selector == game.players.length || selector == game.players.length - 1)
+       {
+         selector = 0;
+         death = false;
+       }
+       else if(death == false) selector++;
+       else death = false;*/
+
+      if(playerNum == 1)
+      {
+        let winner;
+        for(var i = 0; i < game.players.length; i++){
+          if(game.players[i] != null){
+            winner = i;
+            break;
+          }
+        }
+        m.channel.send(">game over, `" + game.players[winner].displayName + "` wins!");
+        delete games[id];
+        bot.clearInterval(gameInterval);
+        console.log("---game over---");
+      }
+    }, eventInterval*1000);
+  });
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //on message
