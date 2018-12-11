@@ -1403,7 +1403,7 @@ function handleCMD(msg)
           else m.reply("You're already in the game!");
         });
         collector.on('end', collected => {
-          if(collected.size < 1) return msg.channel.send("not enough players!");
+          if(players.length < 1) return msg.channel.send("not enough players!");
           msg.channel.send("Timer over, starting game!");
           games[msg.guild.id] = {channel: msg.channel, round, type, players};
           //if(type == "rr")
