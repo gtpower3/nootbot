@@ -1628,9 +1628,13 @@ bot.on("message", msg => {
     msg.channel.send("no u");
   } else //no u
 
-  if(input.toUpperCase() === "K"){
+  if(input.toUpperCase() === "K" || input.toUpperCase() === "OOF" ){
     msg.channel.send("oof");
-  }
+  } else //oof
+
+  if(input.toUpperCase() === "F" || input.toUpperCase() === "RIP"){
+    msg.channel.send("F");
+  } //F in chat
 
   if(input.startsWith(prefix + "AAAA "))
   {
