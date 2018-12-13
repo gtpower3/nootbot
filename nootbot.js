@@ -1637,7 +1637,7 @@ function playRR(id)
 
       let rng = (Math.floor(Math.random() * 6) + 1);
       target = game.players[selector];
-      console.log(`selector: [${selector}] - ${target.displayName}`);
+      console.log(`selector: [${selector}/${game.players.length}] - ${target.displayName}`);
       //m.edit(`${m.content}\n>${target.displayName} :gun: pulling the trigger in 5 seconds! (for dramatic purposes)`);
 
       if(rng === 1)
