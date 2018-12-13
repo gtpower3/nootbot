@@ -434,7 +434,7 @@ function handleCMD(msg)
 
   if(input === prefix + "SERVERS")
   {
-    if(!isNBS(msg.member)) return
+    //if(!isNBS(msg.member)) return
     let servers = bot.guilds.array();
     let res = "";
 
@@ -447,7 +447,7 @@ function handleCMD(msg)
 
   if(input.startsWith(prefix + "SERVERINFO ") || input.startsWith(prefix + "SI "))
   {
-    if(!isNBS(msg.member)) return
+    //if(!isNBS(msg.member)) return
     let guild = msg.content.slice(12);
 
     if(isNaN(guild)) guild = bot.guilds.find('name', guild); //if it's a name
@@ -643,17 +643,6 @@ function handleCMD(msg)
       console.log(`error on .say: ${e}`);
     }
   } else //say
-
-  if(input === prefix + "NOU")
-  {
-    if(msg.channel.type !== "text") return;
-    if(isNBS(msg.member))
-    {
-      msg.delete().then(m => {
-        m.channel.send("no u");
-      });
-    }
-  } else //troll nou
 
   if(input === prefix + "READ")
   {
