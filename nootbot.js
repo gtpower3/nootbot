@@ -763,11 +763,21 @@ function handleCMD(msg)
     ];
     var rn = Math.floor(Math.random() * response.length);
 
-    msg.reply(response[rn]);
+    const embed = new RichEmbed()
+      // Set the title of the field
+      .setTitle(`**${msg.author.username}:** ${msg.content.slice(6)}`)
+      // Set the color of the embed
+      .setColor(0xFF0000)
+      // Set the main content of the embed
+      .setDescription(`**nootboi:** ${response[rn]}`)
+      // Set a thumbnail
+      .setThumbnail("https://cdn.discordapp.com/avatars/195616848203481088/95e9e8d282c5d1ca40cc4c5521d6d48c.png?size=2048")
+      // Set a footer
+      .setFooter("noot noot")
+    // Send the embed to the same channel as the message
+    msg.channel.send(embed);
 
-    //var x = ("nootbot replied `" + response[rn] + "`")
-    //log(x);
-    //bot.send(nootlog, "nootbot replied `" + response[rn] + "`");
+    //msg.reply(response[rn]);
   } else //noot
 
   if(input.startsWith(prefix + "VAPOR "))
@@ -1163,15 +1173,55 @@ function handleCMD(msg)
     let target = msg.author;
     let rng = (Math.floor(Math.random() * rrchance) + 1);
 
-    msg.reply(":gun: pulling the trigger in 5 seconds! (for dramatic purposes)");
+    //msg.reply(":gun: pulling the trigger in 5 seconds! (for dramatic purposes)");
     //console.log(`RR: ${rng}`);
+
+    const embed = new RichEmbed()
+      // Set the title of the field
+      .setTitle("pulling the trigger in 5 seconds!")
+      // Set the color of the embed
+      .setColor(0xFFFFFF)
+      // Set the main content of the embed
+      .setDescription("(for dramatic purposes)")
+      // Set a thumbnail
+      .setThumbnail("https://images.emojiterra.com/google/android-oreo/512px/1f52b.png")
+      // Set a footer
+      .setFooter("noot noot")
+    // Send the embed to the same channel as the message
+    msg.channel.send(embed);
 
     setTimeout(() => {
       if(rng === 1)
        {
-         msg.reply(":fire: it's a shot!");
+         //msg.reply(":fire: it's a shot!");
+         embed
+         .setTitle("it's a shot!")
+         // Set the color of the embed
+         .setColor(0xFF0000)
+         // Set the main content of the embed
+         .setDescription("u ded")
+         // Set a thumbnail
+         .setThumbnail("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/emojione/151/fire_1f525.png")
+         // Set a footer
+         .setFooter("noot noot")
+       // Send the embed to the same channel as the message
+       msg.channel.send(embed);
        }
-       else msg.reply(":heavy_check_mark: it's not a shot! you live to roulette another day!");
+       else {
+         //msg.reply(":heavy_check_mark: it's not a shot! you live to roulette another day!");
+         embed
+         .setTitle("it's not a shot!")
+         // Set the color of the embed
+         .setColor(0x00FF00)
+         // Set the main content of the embed
+         .setDescription("you live to roulette another day!")
+         // Set a thumbnail
+         .setThumbnail("https://images.emojiterra.com/twitter/v11/512px/2714.png")
+         // Set a footer
+         .setFooter("noot noot")
+       // Send the embed to the same channel as the message
+       msg.channel.send(embed);
+       }
      }, 5000);
   } else //rrg
 
