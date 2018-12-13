@@ -43,7 +43,6 @@ var gtid = "111782598199513088";
 var nootbot = "<@195616848203481088>";
 var nootbot2 = "<@!195616848203481088>";
 var nootbotid = "195616848203481088";
-var tlu = "268481536863633410";
 var nbcontrol = "195666499254353920";
 
 //messages
@@ -748,15 +747,30 @@ function handleCMD(msg)
     [
     "yes",
     "no",
-    "i don't fucking know",
+    "ya",
+    "nah",
+    "yep",
+    "nope",
     "maybe",
     "maybe not",
     "obviously",
     "obviously not",
+    "definitely",
+    "definitely not",
+    "certainly",
+    "certainly not",
     "it seems so",
-    "how about no",
+    "it doesn't seem so",
+    "i doubt it",
+    "i don't doubt it",
+    "no idea",
+    "you tell me",
+    "god knows",
     ":100:",
-    "i doubt it"
+    "0% chance",
+    ":heavy_check_mark:",
+    ":x:",
+    ":thinking:"
     ];
     var rn = Math.floor(Math.random() * response.length);
 
@@ -828,7 +842,9 @@ function handleCMD(msg)
     }
     msg.channel.send(res);
   } else //bify
+  //TODO: redo this cmd so that it splits words THEN split each word into letters and bify
 
+/*
   if(input.startsWith(prefix + "POLL "))
   {
     if(poll) return msg.reply("a poll is already underway");
@@ -891,6 +907,7 @@ function handleCMD(msg)
       delete polls[msg.guild.id];
     });
   } else //poll
+*/
 
   if(input.startsWith(prefix + "AVATAR "))
   {
@@ -924,50 +941,6 @@ function handleCMD(msg)
 
     bot.user.setGame(status);
   }
-
-/*
-  if(input.startsWith(prefix + "GIF "))
-  {
-    var query = msg.content.slice((prefix.length) + 4);
-
-    giphy.search({q: query}, function(err, res)
-    {
-      if(res.data)
-      {
-        if (res.data.length > 0)
-        {
-          var rn = (Math.floor(Math.random() * (res.data.length)) + 0);
-          msg.channel.send(res.data[rn].images.original.url);
-        }
-        else
-        {
-          msg.reply(`i couldn't find a gif for **${query}**`);
-        }
-
-        //log(msg, res.data[rn].images.original.url);
-        //bot.send(message, res.data[rn].images.original.url);
-        //bot.send(nootlog, res.data[rn].images.original.url);
-      }
-      else
-      {
-        msg.reply("i couldn't find a gif for `" + query + "`");
-      }
-    });
-  } else //gif
-
-*/
-
-
-
-  if(input.startsWith(prefix + "GIFSEARCH "))
-  {
-    var query = msg.content.slice((prefix.length) + 10);
-    // Search for a gif
-    gifsearch.query(query).then( gifUrl => {
-      msg.channel.send(`'${query}'\n${gifUrl}`);
-      console.log(gifUrl);
-    });
-  } else //gifsearch
 
   if(input.startsWith(prefix + "GIF "))
   {
@@ -1110,7 +1083,6 @@ function handleCMD(msg)
     }
   } else //play yt
 
-
   if(input === prefix + "QUEUE")
   {
     const id = msg.guild.id
@@ -1196,7 +1168,6 @@ function handleCMD(msg)
       }
     }
   } else //volume
-
 
   if(input === prefix + "RUSSIANROULETTE" || input === prefix + "RR")
   {
@@ -1308,7 +1279,6 @@ function handleCMD(msg)
 
     if(selections.length < 2) return msg.reply(":x: there needs to be atleast 2 choices");
     var rn = Math.floor(Math.random() * (selections.length) + 0);
-    //console.log(`length: ${selections.length}, choice: ${rn}`);
 
     msg.reply(`i choose \`${selections[rn]}\`!`);
   } else //pick
@@ -1414,74 +1384,6 @@ function handleCMD(msg)
     }
   } else //game
 
-/*
-  if (input.startsWith(prefix + "GAME "))
-  {
-    let cmd = msg.content.slice(6);
-
-    if(cmd.toUpperCase() == "START")
-    {
-      if(!games.hasOwnProperty(msg.guild.id))
-      {
-        let round = 0;
-        let type = "hg"; //modes: "hg" = hunger games | "got" = game of thrones |
-        let players = [];
-        msg.channel.send("A new round of hunger games is about to start! Type `.game join` within 30 seconds to join in!");
-        // Create a message collector
-        const collector = msg.channel.createCollector(
-         m => m.content.toUpperCase() == prefix + "GAME JOIN",
-         { time: 10000 });
-        collector.on('collect', m => {
-          let player = m.member;
-          if(!players.includes(player))
-          {
-            console.log("doesnt include")
-            players.push(player);
-            m.channel.send(`${player} has joined the game!`);
-          }
-          else m.reply("You're already in the game!");
-        });
-        collector.on('end', collected => {
-          msg.channel.send("Timer over, starting game!");
-          games[msg.guild.id] = {channel: msg.channel, round, type, players};
-          playGame(msg.guild.id);
-        });
-      }
-    }
-  } else //game
-  */
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //TLU
-
-  if(input === prefix + "ROLES")
-  {
-    if(msg.guild.id !== tlu || msg.channel.id !== "269177516105793539") return //returns if not in TLU or not in role-box
-    let roles = msg.guild.roles.array();
-    let res = "";
-
-    for(var i = 0; i < roles.length; i++)
-    {
-      if(roles[i].name == "nova" || roles[i].name == "hallen" || roles[i].name == "whitecrest" || roles[i].name == "blackwind")
-      {
-        res = `${res}\n${roles[i].name} - ${roles[i].members.size} members`;
-      }
-    }
-    msg.channel.send("```" + res + "```\nto join a role type: .role <name>");
-  } else //roles
-
-  if(input.startsWith(prefix + "ROLE "))
-  {
-    if(msg.guild.id !== tlu || msg.channel.id !== "269177516105793539") return //returns if not in TLU or not in role-box
-    let role = msg.content.split(" ")[1];
-
-    if(!msg.guild.roles.exists('name', role)) return msg.reply("role not found");
-    msg.member.addRole(msg.guild.roles.find('name', role));
-  } //role
-
-  //msg.channel.stopTyping();
-}
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //events
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1508,18 +1410,6 @@ bot.on("reconnecting", () => {
 bot.on("resume", num => {
   console.log("nootbot connected");
 }); //resume
-
-/*
-bot.on("presenceUpdate", (oldMember, newMember) => {
-  if(oldMember.guild.id != "183755486628151296") return;
-  if(oldMember.id != gtid) return;
-  if(oldMember.presence.status == newMember.presence.status) return;
-  bot.users.get(gtid).send(`${newMember.user.username}'s status has changed from \`${oldMember.presence.status}\` to \`${newMember.presence.status}\``);
-  bot.users.get("244333739121967105").send(`${newMember.user.username}'s status has changed from \`${oldMember.presence.status}\` to \`${newMember.presence.status}\``); //the dill
-  bot.users.get("105026998639812608").send(`${newMember.user.username}'s status has changed from \`${oldMember.presence.status}\` to \`${newMember.presence.status}\``); //kagaros
-}); //presenceUpdate */
-
-//bot.setInterval(() => { bot.channels.get("195666499254353920").send("boop"); }, 30000);
 
 bot.on("guildCreate", (guild) => {
   bot.channels.get(nootlog).send(`${gt}, I have **joined** a new guild: \`${guild.name}\` owned by \`${guild.owner.user.username}\``);
@@ -1628,14 +1518,14 @@ function playRR(id)
 
   let selector = 0;
   let playerNum = game.players.length;
-  let target;
+  var target;
 
   game.channel.send(">game starts").then(m => {
     m.channel.send("playing rr internally.....");
     var gameInterval = bot.setInterval(() => {
       if(stop) bot.clearInterval(gameInterval);
 
-      let rng = (Math.floor(Math.random() * 6) + 1);
+      var rng = (Math.floor(Math.random() * 6) + 1);
       target = game.players[selector];
       console.log(`selector: [${selector}/${game.players.length}] - ${target.displayName}`);
       //m.edit(`${m.content}\n>${target.displayName} :gun: pulling the trigger in 5 seconds! (for dramatic purposes)`);
