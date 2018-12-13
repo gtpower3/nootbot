@@ -1472,53 +1472,6 @@ bot.on("channelCreate", (channel) => {
 //functions
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*
-function log(msg)
-{
-  if((msg.author.id == nootbotid) && (!can_log)) return;
-  if(msgno%10 == 0) bot.channels.get(nootlog).setTopic(msgno);
-  let content = msg.content;
-  if(content.length>=2000) return;
-
-  try {
-    content = msg.attachments.first().message.content + " " + msg.attachments.first().url;
-  }
-  catch(e){}
-
-  if(!msg.guild)
-  { //if it's a PM
-    bot.channels.get(nootlog).send(
-      "[" + msgno + "]" + `\n${now()}`
-      + "\n**PM from:** "
-      + msg.author.username
-      + " (" + msg.author.id + ")"
-      + "\n**content:** "
-      + content
-      + "\n--------------------------------------------------------------", {disableEveryone: true}
-    );
-  }
-  else
-  {
-    bot.channels.get(nootlog).send(
-      "[" + msgno + "]" + `\n${now()}`
-      + "\n**author:** "
-      + msg.author.username
-      + " (" + msg.author.id + ")"
-      + "\n**content:** "
-      + content
-      + "\n**channel:** "
-      + msg.channel.name
-      + " (" + msg.channel.id + ")"
-      + "\n**server:** "
-      + msg.guild.name
-      + " (" + msg.guild.id + ")"
-      + "\n--------------------------------------------------------------", {disableEveryone: true}
-    );
-  }
-  msgno++;
-}
-*/
-
 function playyt(vc, mc, link)
 {
   vc.join()
@@ -1623,7 +1576,6 @@ function playRR(id)
 bot.on("message", msg => {
   if(((msg.author.id == nootbotid)) && ((lockdown == true) || ((lockdown == false) && (msg.author.id !== gt)))) return
   if((msg.guild) && (!msg.channel.guild.members.get(nootbotid).permissions.has('SEND_MESSAGES'))) return //if has no send message perm
-  //log(msg);
 
   let input = msg.content.toUpperCase();
 
