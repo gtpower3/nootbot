@@ -81,7 +81,7 @@ var events = [
   ["is killed by", "is punched to death by", "is choked to death by", "is shot to death by"] //doubleDeaths:
 ];
 var stop = false;
-var joinTimer = 10; //seconds
+var joinTimer = 15; //seconds
 var eventInterval = 5; //seconds
 /*
 var individualEvents = [];
