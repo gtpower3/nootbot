@@ -1537,10 +1537,10 @@ function playRR(id)
            selector++;
         }
 
-        if(selector === game.players.length - 1) selector = 0;
+        if(selector == game.players.length) selector = 0;
 
-        while(game.players[selector] === null){
-           if(selector === game.players.length - 1) selector = 0;
+        while(game.players[selector] == null) {
+           if(selector === game.players.length) selector = 0;
            else selector++;
         }
 
