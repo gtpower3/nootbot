@@ -1521,7 +1521,7 @@ function playRR(id)
 
         var rng = (Math.floor(Math.random() * 6) + 1);
         target = game.players[selector];
-        console.log(`selector: [${selector}/${game.players.length}] - ${target.displayName}`);
+        console.log(`selector: [${selector}/${game.players.length - 1}] - ${target.displayName}`);
         //m.edit(`${m.content}\n>${target.displayName} :gun: pulling the trigger in 5 seconds! (for dramatic purposes)`);
 
         if(rng === 1)
@@ -1540,7 +1540,7 @@ function playRR(id)
         if(selector == game.players.length) selector = 0;
 
         while(game.players[selector] == null) {
-           if(selector === game.players.length) selector = 0;
+           if(selector == game.players.length) selector = 0;
            else selector++;
         }
 
