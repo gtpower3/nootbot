@@ -1636,7 +1636,21 @@ bot.on("message", msg => {
 
   if(input.toUpperCase() === "F" || input.toUpperCase() === "RIP"){
     msg.channel.send("F");
-  } //F in chat
+  } else //F in chat
+
+  if(input.toUpperCase().includes("THANKS")){
+    var response =
+    [
+    "ur welcome",
+    "no problem",
+    "don't mention it",
+    "anytime",
+    "not at all"
+    ];
+
+    var rn = Math.floor(Math.random() * response.length);
+    msg.reply(response[rn]);
+  }
 
   if(input.startsWith(prefix + "AAAA "))
   {
