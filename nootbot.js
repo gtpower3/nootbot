@@ -1638,7 +1638,7 @@ bot.on("message", msg => {
     msg.channel.send("F");
   } else //F in chat
 
-  if(input.toUpperCase().includes("THANKS")){
+  if(input.search(/THANKS|THANK YOU/) > -1) {
     var response =
     [
     "ur welcome",
@@ -1650,7 +1650,7 @@ bot.on("message", msg => {
 
     var rn = Math.floor(Math.random() * response.length);
     msg.reply(response[rn]);
-  }
+  } else //thanks
 
   if(input.startsWith(prefix + "AAAA "))
   {
