@@ -1353,29 +1353,6 @@ function handleCMD(msg)
     });
   } else //rps
 
-  if(input.startsWith(prefix + "RAFFLE"))
-  {
-    if(msg.author.id !== gtid) return
-    var nbs = msg.guild.roles.get("310319421056876545").members.array();
-    var res = "";
-
-    function emojiDecision(decision)
-    {
-      if (decision) return ":heavy_check_mark:";
-      else return ":x:";
-    }
-
-    for (var i = 0; i < nbs.length; i++)
-    {
-      let decision = true; //true = stays, false = leaves
-      let rng = (Math.floor(Math.random() * rrchance) + 1);
-      if(rng === 1) decision = false;
-      res = res + nbs[i].displayName + " " + emojiDecision(decision) + "\n";
-    }
-
-    msg.channel.send(res);
-  }
-
   if(input === prefix + "STOPGAME")
   {
     if(stop == false) stop = true;
@@ -1710,18 +1687,18 @@ bot.on("message", msg => {
                   msg.channel.stopTyping();
               }
           }, 3000);
-          console.log(msg.member.displayName + " was an idiot and spelt " + word + " wrong. Was corrected to " + incorrect);
+          //console.log(msg.member.displayName + " was an idiot and spelt " + word + " wrong. Was corrected to " + incorrect);
           done = true;
         }
       });
     });
   } else //spell check
 
-  if(input.startsWith("_GAME START"))
-  {
-    if(msg.channel.id !== nbcontrol) return;
-    msg.channel.send("_game join");
-  } else //game join
+  // if(input.startsWith("_GAME START"))
+  // {
+  //   if(msg.channel.id !== nbcontrol) return;
+  //   msg.channel.send("_game join");
+  // } else //game join
 
   if(msg.content.startsWith(prefix)) handleCMD(msg);
   lastevent = `message: ${msg.content} by: ${msg.author.username}`;
