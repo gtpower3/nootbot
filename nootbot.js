@@ -1629,6 +1629,17 @@ bot.on("message", msg => {
     msg.reply(response[rn]);
   } else //thanks
 
+  if(input === "WHAT" || input === "WAT") {
+    if(msg.channel.type !== "text") return;
+    if(msg.author.id !== gtid) return;
+
+    msg.channel.fetchMessages({ limit: 10 })
+  .then(messages => {
+    var lmsg = messages.first(2)[1];
+    msg.reply(`${lmsg.member.displayName} SAID ${lmsg.content.toUpperCase()}`);
+  }).catch(console.error);
+  } else //what
+
   if(input.startsWith(prefix + "AAAA "))
   {
     let num = msg.content.split(" ")[1];
