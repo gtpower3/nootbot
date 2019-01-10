@@ -1631,12 +1631,11 @@ bot.on("message", msg => {
 
   if(input === "WHAT" || input === "WAT") {
     if(msg.channel.type !== "text") return;
-    if(msg.author.id !== gtid) return;
 
     msg.channel.fetchMessages({ limit: 10 })
   .then(messages => {
     var lmsg = messages.first(2)[1];
-    msg.reply(`${lmsg.member.displayName} SAID ${lmsg.content.toUpperCase()}`);
+    msg.reply(`${lmsg.member.displayName.toUpperCase()} SAID ${lmsg.content.toUpperCase()}`);
   }).catch(console.error);
   } else //what
 
