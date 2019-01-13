@@ -916,7 +916,7 @@ function handleCMD(msg)
     else target = bot.users.get(target); //if it's an ID
     if(!target) return console.log("invalid user");
 
-    msg.channel.send(target.avatarURL, `${target.username}-avatar.png`);
+    msg.channel.send(target.avatarURL);
 
   } else //avatar
 
@@ -928,7 +928,7 @@ function handleCMD(msg)
     else target = bot.guilds.get(target); //if it's an ID
     if(!target) return console.log("invalid guild");
 
-    msg.channel.send(target.iconURL, `${target.name}-icon.png`);
+    msg.channel.send(target.iconURL);
   } else //icon
 
   if(input.startsWith(prefix + "STATUS "))
