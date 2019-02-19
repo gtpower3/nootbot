@@ -5,9 +5,16 @@
 //discord.js
 const { Client, RichEmbed } = require('discord.js');
 const bot = new Client();
+var lastevent = "N/A";
 
 //nootbot.json
 const config = require('./nootbot.json');
+
+//cleverbot.io
+const Cleverbot = require('cleverbot.io');
+const cbot = new Cleverbot(process.env.CLEVERBOT_API_USER, process.env.CLEVERBOT_API_KEY);
+cbot.setNick('nootboi');
+cbot.create(function (err, session) {
 
 //youtube-search
 const search = require('youtube-search');
@@ -123,7 +130,6 @@ function playGame(id)
 } //playGame
 
 //debug
-var lastevent = "N/A";
 var rrchance = 6;
 
 //cmds
@@ -1562,6 +1568,19 @@ bot.on("message", msg => {
 
   let input = msg.content.toUpperCase();
 
+  //console.log(msg.isMentioned(bot.user));
+
+  if(msg.isMentioned(nootbotid))
+  {
+    //console.log("nootboi mentioned: " + msg.content);
+    var query = msg.cleanContent.slice(bot.user.username.length + 2);
+    //console.log(`cb query: ${query}`);
+
+    cbot.ask(query, function (err, response) {
+        msg.channel.send(response);
+    });
+  } else //cleverbot
+
   if(msg.content === "@anyone")
   {
     if(msg.channel.type !== "text") return
@@ -1713,7 +1732,7 @@ bot.on("message", msg => {
   if(msg.content.startsWith(prefix)) handleCMD(msg);
   lastevent = `message: ${msg.content} by: ${msg.author.username}`;
 });
-
+});
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
