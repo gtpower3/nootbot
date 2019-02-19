@@ -1577,7 +1577,7 @@ bot.on("message", msg => {
     //console.log(`cb query: ${query}`);
 
     cbot.ask(query, function (err, response) {
-        msg.channel.send(response);
+        msg.reply(response);
     });
   } else //cleverbot
 
