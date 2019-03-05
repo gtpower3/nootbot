@@ -1573,12 +1573,14 @@ bot.on("message", msg => {
   if(msg.isMentioned(nootbotid))
   {
     //console.log("nootboi mentioned: " + msg.content);
+    msg.channel.startTyping();
     var query = msg.cleanContent.slice(bot.user.username.length + 2);
     //console.log(`cb query: ${query}`);
 
     cbot.ask(query, function (err, response) {
         msg.reply(response);
     });
+    msg.channel.stopTyping(true);
   } else //cleverbot
 
   if(msg.content === "@anyone")
