@@ -442,8 +442,8 @@ function handleCMD(msg)
 
   if(input === prefix + "CMDCOUNT" && msg.author.id == gtid)
   {
-    msg.channel.send(`since last time: handleCMD was called \`${handleCMD_counter}\` times.... resetting timer`);
-    handleCMD_counter = 0;
+    msg.channel.send(`since ${handleCMD_last} time: handleCMD was called \`${handleCMD_counter}\` times.... resetting timer`);
+    handleCMD_counter = -1;
     handleCMD_last = now();
   } else //cmdcount
 
