@@ -131,6 +131,8 @@ function playGame(id)
 
 //debug
 var rrchance = 6;
+var handleCMD_counter = 0;
+var handleCMD_last = "START_OF_TIME";
 
 //cmds
 var cmds = //general | features | utility
@@ -437,6 +439,13 @@ function handleCMD(msg)
   {
     msg.channel.send("pong!");
   } else //ping
+
+  if(input === prefix + "CMDCOUNT" && msg.author.id == gtid)
+  {
+    msg.channel.send(`since last time: handleCMD was called \`${handleCMD_counter}\` times.... resetting timer`);
+    handleCMD_counter = 0;
+    handleCMD_last = now();
+  } else //cmdcount
 
   if(input === prefix + "SERVERS")
   {
@@ -1405,6 +1414,7 @@ function handleCMD(msg)
       }
     }
   } //game
+  handleCMD_counter++;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
