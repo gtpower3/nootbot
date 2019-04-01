@@ -1660,6 +1660,20 @@ bot.on("message", msg => {
     msg.reply(response[rn]);
   } else //thanks
 
+  if(input.search(/SORRY/) > -1) {
+    var response =
+    [
+    "it's alright",
+    "i forgive u",
+    "don't apologise",
+    "we all make mistakes",
+    "no problem"
+    ];
+
+    var rn = Math.floor(Math.random() * response.length);
+    msg.reply(response[rn]);
+  } else //sorry
+
   if(input === "WHAT" || input === "WAT") {
     if(msg.channel.type !== "text") return;
 
