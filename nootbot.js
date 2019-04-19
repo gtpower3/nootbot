@@ -1684,7 +1684,7 @@ bot.on("message", msg => {
   }).catch(console.error);
   } else //what
 
-  if(input.search(/OR/) > -1) {
+  if(input.includes(" OR ")) {
     msg.reply("yes");
   } else //or
 
