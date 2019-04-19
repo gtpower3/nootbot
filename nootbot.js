@@ -1684,6 +1684,10 @@ bot.on("message", msg => {
   }).catch(console.error);
   } else //what
 
+  if(input.search(/OR/) > -1) {
+    msg.reply("yes");
+  } else //or
+
   if(input.startsWith(prefix + "AAAA "))
   {
     let num = msg.content.split(" ")[1];
