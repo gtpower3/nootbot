@@ -1683,10 +1683,11 @@ bot.on("message", msg => {
     msg.reply(`${lmsg.member.displayName.toUpperCase()} SAID ${lmsg.content.toUpperCase()}`);
   }).catch(console.error);
   } else //what
-
+/*
   if(input.includes(" OR ")) {
     msg.reply("yes");
   } else //or
+*/
 
   if(input.startsWith(prefix + "AAAA "))
   {
