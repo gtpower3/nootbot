@@ -14,7 +14,7 @@
     "opusscript": "^0.0.6",
     "ytdl-core": "^0.20.4",
     "node-opus" : "^0.3.1",
-    "cleverbot" : "1.0.3"
+    "cleverbot-free" : "1.0.3"
   },
   "scripts": {
     "start": "node nootbot.js"
