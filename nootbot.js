@@ -11,10 +11,10 @@ var lastevent = "N/A";
 const config = require('./nootbot.json');
 
 //cleverbot.io
-/*const Cleverbot = require('cleverbot.io');
-const cbot = new Cleverbot(process.env.CLEVERBOT_API_USER, process.env.CLEVERBOT_API_KEY);
-cbot.setNick('nootboi');
-cbot.create(function (err, session) {*/
+const Cleverbot = require('cleverbot-free');
+//const cbot = new Cleverbot(process.env.CLEVERBOT_API_USER, process.env.CLEVERBOT_API_KEY);
+//cbot.setNick('nootboi');
+//cbot.create(function (err, session) {*/
 
 //youtube-search
 const search = require('youtube-search');
@@ -1579,7 +1579,7 @@ bot.on("message", msg => {
   let input = msg.content.toUpperCase();
 
   //console.log(msg.isMentioned(bot.user));
-/*
+
   if(msg.isMentioned(nootbotid))
   {
     //console.log("nootboi mentioned: " + msg.content);
@@ -1587,12 +1587,13 @@ bot.on("message", msg => {
     var query = msg.cleanContent.slice(bot.user.username.length + 2);
     //console.log(`cb query: ${query}`);
 
-    cbot.ask(query, function (err, response) {
-        msg.reply(response);
+    Cleverbot(query).then(response =>
+    {
+      msg.channel.send(msg.author + " " + response);
     });
     msg.channel.stopTyping(true);
   } else //cleverbot
-*/
+
   if(msg.content === "@anyone")
   {
     if(msg.channel.type !== "text") return
