@@ -1497,6 +1497,7 @@ function playyt(vc, mc, link)
   });
 }
 
+/*
 function playRR(id)
 {
   try {
@@ -1537,14 +1538,6 @@ function playRR(id)
            else selector++;
         }
 
-         /*if(selector == game.players.length || selector == game.players.length - 1)
-         {
-           selector = 0;
-           death = false;
-         }
-         else if(death == false) selector++;
-         else death = false;*/
-
         if(playerNum == 1)
         {
           let winner;
@@ -1555,6 +1548,74 @@ function playRR(id)
             }
           }
           m.channel.send(">game over, `" + game.players[winner].displayName + "` wins!");
+          delete games[id];
+          bot.clearInterval(gameInterval);
+          console.log("---game over---");
+        }
+      }, eventInterval*1000);
+    });
+  }
+  catch(e) {
+    msg.channel.send("`something went wrong... ending game`");
+    console.log(e);
+  }
+}
+*/
+
+function playRR(id)
+{
+  try {
+    let game = games[id];
+    if (!game.type == "rr") return msg.channel.send("invalid game type");
+
+    var selector = 0;
+    var selectorMsg;
+    var playerNum = game.players.length;
+    var target;
+
+    game.channel.send(">game starts").then(m => {
+      m.channel.send("playing rr internally.....")
+      .then(message => selectorMsg = message)
+      .catch(console.error);
+      var gameInterval = bot.setInterval(() => {
+        if(stop) bot.clearInterval(gameInterval);
+
+        var rng = (Math.floor(Math.random() * 6) + 1);
+        target = game.players[selector];
+        console.log(`selector: [${selector}/${game.players.length - 1}] - ${target.displayName}`);
+        selectorMsg.edit(`> ${target.displayName}'s turn`);
+        //m.edit(`${m.content}\n>${target.displayName} :gun: pulling the trigger in 5 seconds! (for dramatic purposes)`);
+
+        if(rng === 1)
+        {
+           //m.edit(`${m.content}\n>${target.displayName} :fire: it's a shot! you're out!`);
+           selectorMsg.edit(`${target.displayName}: :fire: it's a shot! you're out!\n${game.players.length-1} players left`);
+           game.players[selector] = null;
+           playerNum--;
+           console.log(`${target.displayName}[${selector}] is spliced`);
+        }
+        else {
+           //m.edit(`${m.content}\n>${target.displayName} :heavy_check_mark: it's not a shot! you live to roulette another round!`);
+           selector++;
+        }
+
+        if(selector == game.players.length) selector = 0;
+
+        while(game.players[selector] == null) {
+           if(selector == game.players.length) selector = 0;
+           else selector++;
+        }
+
+        if(playerNum == 1)
+        {
+          let winner;
+          for(var i = 0; i < game.players.length; i++){
+            if(game.players[i] != null){
+              winner = i;
+              break;
+            }
+          }
+          selectorMsg.edit(">game over, `" + game.players[winner].displayName + "` wins!");
           delete games[id];
           bot.clearInterval(gameInterval);
           console.log("---game over---");
