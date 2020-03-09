@@ -1511,6 +1511,7 @@ function playyt(vc, mc, link)
   .then(connection => {
     var dispatcher;
 
+    console.log(`playing: ${link}`);
     let stream = yt(link, {audioonly: true});
     stream.on('info', (info, format) => {
       mc.send("playing: `" + info.title + "` by `" + info.author.name + "`");
