@@ -16,13 +16,16 @@ const Cleverbot = require('cleverbot-free');
 //cbot.setNick('nootboi');
 //cbot.create(function (err, session) {*/
 
-//youtube-search
-const search = require('youtube-search');
+//yt-search
+const search = require('yt-search');
+
+/*
 var opts = {
   maxResults: 5,
   type: 'video',
   key: process.env.API_KEY
 };
+*/
 
 //fs
 const fs = require('fs');
@@ -710,13 +713,32 @@ function handleCMD(msg)
   if(input.startsWith(prefix + "SEARCH "))
   {
     let query = msg.content.slice(8);
-    search(query, opts, (err, res) => {
-      if(err) return console.log(err);
+    //console.log(`searching ${query}`);
 
-      msg.channel.send(`top 5 results for \`${query}\``);
+    search(query, (err, res) => {
+      if(err) return console.error(err);
+
       var resl = "";
-      for(var i = 0; i < res.length; i++) resl = resl + "\n" + res[i].link;
-      msg.channel.send(resl);
+      const vids = res.videos;
+
+      for(var i = 0; i < 5; i++) resl = resl + "\n **[" + i + "]** " + vids[i].title;
+      //console.log(vids[0].title);
+      const embed = new RichEmbed()
+        // Set the title of the field
+        .setTitle(`top 5 results for *${query}*`)
+        // Set the color of the embed
+        .setColor(0xFF0000)
+        // Set the main content of the embed
+        .setDescription(resl)
+        // Set a thumbnail
+        .setThumbnail("https://cdn.discordapp.com/avatars/195616848203481088/95e9e8d282c5d1ca40cc4c5521d6d48c.png?size=2048")
+        // Set a footer
+        .setFooter("noot noot")
+      // Send the embed to the same channel as the message
+      msg.channel.send(embed);
+
+
+      //msg.channel.send(resl);
       //console.dir(res);
     });
   } else //search
@@ -1044,20 +1066,38 @@ function handleCMD(msg)
     }
     else
     {
-      search(target, opts, (err, res) => {
+      search(target, (err, res) => {
         if(err) return msg.reply("error: " + err);
 
         var resl = "";
+        const vids = res.videos;
+        var toDel;
+
         var reslist = [];
-        for(var i = 0; i < res.length; i++)
+        for(var i = 0; i < 5; i++)
         {
-          resl = `${resl}\n[${i+1}] ${res[i].title}`;
-          reslist.push(res[i].link);
+          resl = `${resl}\n**[${i+1}]** ${vids[i].title}`;
+          reslist.push(vids[i].url);
         }
-        var toDel = [];
+
+        const embed = new RichEmbed()
+          // Set the title of the field
+          .setTitle(`top 5 results for *${target}*`)
+          // Set the color of the embed
+          .setColor(0xFF0000)
+          // Set the main content of the embed
+          .setDescription(resl)
+          .addField('say `.choose <1-5>`', 'to pick an option')
+          // Set a thumbnail
+          .setThumbnail("https://cdn.discordapp.com/avatars/195616848203481088/95e9e8d282c5d1ca40cc4c5521d6d48c.png?size=2048")
+          // Set a footer
+          .setFooter("noot noot")
+        // Send the embed to the same channel as the message
+        msg.channel.send(embed).then(m => toDel = m );
+
         var author = msg.author.id;
-        msg.channel.send(`# results for '${target}'\n${resl}`, {code: 'markdown'}).then(m => toDel.push(m));
-        msg.channel.send("say `.choose <1-5>` to pick an option").then(m => toDel.push(m));
+        //msg.channel.send(`# results for '${target}'\n${resl}`, {code: 'markdown'}).then(m => toDel.push(m));
+        //msg.channel.send("say `.choose <1-5>` to pick an option").then(m => toDel.push(m));
 
         const collector = msg.channel.createCollector(
          m => m.content.toUpperCase().startsWith(prefix),
@@ -1077,8 +1117,8 @@ function handleCMD(msg)
           collector.stop();
         });
         collector.on('end', collected => {
-          msg.channel.bulkDelete(toDel);
-          if(!target.startsWith("https://www.youtube.com/watch?v=")) return;
+          toDel.delete();
+          if(!target.startsWith("https://youtube.com/watch?v=")) return console.error("invalid url");
           if(!queues[msg.guild.id][0])
           {
             playyt(voiceChannel, queues[msg.guild.id][1], target);
