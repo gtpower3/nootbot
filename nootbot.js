@@ -1509,7 +1509,6 @@ function playyt(vc, mc, link)
 {
   vc.join()
   .then(connection => {
-    var dispatcher;
 
     console.log(`playing: ${link}`);
     let stream = yt(link, {audioonly: true});
@@ -1517,7 +1516,7 @@ function playyt(vc, mc, link)
       mc.send("playing: `" + info.title + "` by `" + info.author.name + "`");
     });
 
-    dispatcher = connection.playStream(stream);
+    const dispatcher = connection.playStream(stream);
     queues[mc.guild.id][0] = true;
 
     dispatcher.on('end', () => {
